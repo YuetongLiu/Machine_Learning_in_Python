@@ -1,0 +1,139 @@
+\documentclass{article}
+
+\usepackage{fullpage}
+\usepackage{color}
+\usepackage{amsmath}
+\usepackage{url}
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage{parskip}
+\usepackage{amssymb}
+\usepackage{nicefrac}
+\usepackage{listings} % For displaying code
+\usepackage{algorithm2e} % pseudo-code
+\usepackage{natbib}
+\usepackage{todonotes}
+
+% Answers
+\def\rubric#1{\gre{Rubric: \{#1\}}}{}
+
+% Colors
+\definecolor{blu}{rgb}{0,0,1}
+\def\blu#1{{\color{blu}#1}}
+\definecolor{gre}{rgb}{0,.5,0}
+\def\gre#1{{\color{gre}#1}}
+\definecolor{red}{rgb}{1,0,0}
+\def\red#1{{\color{red}#1}}
+\def\norm#1{\|#1\|}
+
+% Math
+\def\R{\mathbb{R}}
+\def\argmax{\mathop{\rm arg\,max}}
+\def\argmin{\mathop{\rm arg\,min}}
+\newcommand{\mat}[1]{\begin{bmatrix}#1\end{bmatrix}}
+\newcommand{\alignStar}[1]{\begin{align*}#1\end{align*}}
+\def\half{\frac 1 2}
+
+% LaTeX
+\newcommand{\fig}[2]{\includegraphics[width=#1\textwidth]{#2}}
+\newcommand{\centerfig}[2]{\begin{center}\includegraphics[width=#1\textwidth]{#2}\end{center}}
+\def\items#1{\begin{itemize}#1\end{itemize}}
+\def\enum#1{\begin{enumerate}#1\end{enumerate}}
+
+\begin{document}
+
+
+\title{CPSC 340 Machine Learning Take-Home Final Exam\\ (Spring 2020)}
+\date{}
+\maketitle
+\vspace{-5em}
+
+\section*{Question 1\hspace{10cm}[70/100 points]}
+Recall the MNIST data set from assignment 6 which could be downloaded at \url{http://deeplearning.net/data/mnist/mnist.pkl.gz}. Go ahead and download this dataset, since we will be using it for this question.\\
+\\
+MNIST contains labelled handwritten digits (i.e. 0 to 9) with 60,000 training examples and 10,000 test examples. It is a widely used dataset and with known error rates for several machine learning methods encountered in class. We will be using \url{http://yann.lecun.com/exdb/mnist/} as a reference for test errors.\\
+\\
+For this question, you will implement 5 machine learning methods from class and apply them to the MNIST dataset in order to do supervised classification of digits, with the goal of minimizing the test error. The approaches to be implemented and employed are one example from each of the following types:
+\begin{enumerate}
+    \item k-nearest-neighbours (KNN)
+    \item linear regression
+    \item support vector machine (SVM)
+    \item multi-layer perceptron (MLP)
+    \item convolutional neural network (CNN)
+\end{enumerate}
+\textbf{This question will be answered in a report format,  provided at the end of the exam \LaTeX file \texttt{final.tex}}. You will have to provide test errors achieved using your implementations, calculated as the percentage of incorrectly labeled test examples (using the default test set provided in the MNIST dataset partition). As an example, results from \url{http://yann.lecun.com/exdb/mnist/} for each of the above models (with particular hyper-parameter settings) are shown below::\\
+\begin{center}
+ \begin{tabular}{|c | c |} 
+ \hline
+ Model & Error (\%) \\ [0.5ex]
+ \hline\hline
+ KNN & 0.52 \\
+ linear regression & 7.6 \\
+ SVM & 0.56 \\
+ MLP & 0.35 \\
+ CNN & 0.23 \\ 
+ \hline 
+\end{tabular}
+\end{center}
+\medskip
+Running \texttt{python.py main.py -q 1} will load the MNIST dataset into a training set and a test set (if you stored the dataset in a separate directory called \texttt{./data/}). The rest of the code (model, training, and testing procedures) must be written by you. You are not permitted to use built-in models (e.g. from PyTorch or scikit-learn), but we encourage you to use code from your assignments. Remember that in past assignments, you have had to implement all of the models listed except for CNNs.\\
+\\
+Bundle your code along with a \texttt{.pdf} generated from the filled in \LaTeX  report into a \texttt{.zip} file and submit it to Gradescope. Marks may be taken off for very messy or hard to read code, so make sure to use descriptive variable names and include comments where appropriate. Since we are also marking based on test error, you are expected to only evaluate performance on the test set in the partition provided.
+
+{\em \bf Skeleton for Question 1 Answer}
+
+\section{Introduction}
+
+\emph{Three sentences describing the MNIST classification problem.}
+\gre{MNIST is a database consists of 1,797 digits representing the numbers 0-9 written by high school students and employees of the United States Census Bureau. It is used for training various image processing systems. We are going to use differnet machine learning method to classify the images}
+\section{Methods}
+\subsection{KNN}
+\emph{Three to four sentences describing the particulars of your KNN implementation, highlighting the hyperparameter value choices you made and why.}
+
+\gre{In KNN, the input consists of the k closest training examples in the feature space, and the output depends on whether k-NN is used for classification or regression. The data is splited into training and testing set to train the k-NN classifier. There is also validation set to find the best value for k.}
+
+\subsection{linear regression}
+\emph{Three to four sentences describing the particulars of your linear regression implementation, highlighting the hyperparameter value choices you made and why.}
+
+\gre{The data is splited into training and testing set to train the linear regression classifier. Use the cross-entropy to compute the loss. Then use gradient-based strategy for ftting the robust regression model under the og-sum-exp approximation.
+}
+\subsection{SVM}
+\emph{Three to four sentences describing the particulars of your SVM implementation, highlighting the hyperparameter value choices you made and why.}
+
+\gre{Use SVM with RBF kernel. Firstly, standardize the data with mean=0 and std = 1. Then use cross-validation to find the best parameters C and gamma.}
+
+\subsection{MLP}
+\emph{Three to four sentences describing the particulars of your MLP implementation, highlighting the hyperparameter value choices you made and why.}
+
+\gre{Select loss function called categorical cross entropy and Stochastic Gradient Descent as optimization algorithms. Since the running time of cross-validation is too long, I tried several value in hyperparamer depth and layer width in traning data and use the one with smallest testing error.
+}
+
+\subsection{CNN}
+\emph{Three to four sentences describing the particulars of your CNN implementation, highlighting the hyperparameter value choices you made and why.}
+
+\gre{There are 2 convolution layers followed by pooling layer. Multiple filters are used at each convolution layer.The data is splited into training and testing set to train the CNN classifier}
+
+
+\section{Results}
+\begin{center}
+ \begin{tabular}{|c | c | c|} 
+ \hline
+ Model & Their Error & Your Error (\%) \\ [0.5ex]
+ \hline\hline
+ KNN & 0.52 & \\
+ linear regression & 7.6 & \\
+ SVM & 0.56 & \\
+ MLP & 0.35 & \\
+ CNN & 0.23 & \\ 
+ \hline
+\end{tabular}
+\end{center}
+
+\section{Discussion}
+\emph{Up to half a page describing why you believe your reported test errors are different than those provided (and ``detailed'' on the MNIST website).}
+
+\gre{There choose of hyperparameters could influence error. Moreover, the data need preprocessing before fitting into model.
+}
+
+
+\end{document}
